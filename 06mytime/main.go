@@ -20,4 +20,9 @@ func main() {
 	//GOOS="windows" go build -- for windows
 	//GOOS="darwin" go build -- for mac
 	//go env for all details
+
+	// Memory Management in Golang
+	//Two Methods A. new() --> 1.allocate memory but not initialised 2.get a memory address 3.zeroed storage
+	//B. make() --> 1.allocate memory and initialised 2. get a memory address 3. Non-Zeroed storage (can put values while creating)
+	//Anything out of scope or nil is garbage and garbage collection happens automatically
 }
