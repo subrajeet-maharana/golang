@@ -6,6 +6,6 @@ Golang Repository in a structured manner to learn Golang :infinity:
 Instructors are [Hitesh Choudhary](https://youtube.com/playlist?list=PLRAV69dS1uWQGDQoBYMZWKjzuhCaOnBpa), [Nana Janashia](https://youtu.be/yyUHQIec83I), [Derek Banas](https://youtu.be/YzLrWHZa-Kc)
  
  > Never memorize something that you can lookup.
- > * Albert Einstein
+ > *Albert Einstein*
  
 Go is a statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
