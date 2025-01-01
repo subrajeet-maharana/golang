@@ -4,9 +4,10 @@ import "fmt"
 
 func main(){
   fmt.Println("Welcome to the Integrity Calculator")
+  fmt.Printf("1.Addition\n2.Subtraction\n3.Multiplication\n4.Division\n");
   for {
+      fmt.Println("Choose option for calcuation.")
       var option, num1, num2 float32
-      fmt.Printf("Choose option for calcuation.\n1.Addition\n2.Subtraction\n3.Multiplication\n4.Division\n");
       fmt.Scanln(&option)
       fmt.Println("Enter the numbers: ")
       fmt.Scanln(&num1, &num2) 
