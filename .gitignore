@@ -1,0 +1,22 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Output of the 'go coverage' tool
+*.out
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Environment variables file
+.env
+
+# Node.js modules 
+node_modules/
+
