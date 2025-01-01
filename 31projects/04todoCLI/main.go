@@ -63,6 +63,7 @@ func deleteTask(){
   } else {
     todos=append(todos[:id], todos[id:]...)
   }
+  // todos=slices.Delete(todos,id,id+1)
   fmt.Printf("Todo with ID: %d ('%s') has been deleted successfully!", id, todos[id].Task)
 }
 
