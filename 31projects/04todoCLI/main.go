@@ -20,6 +20,18 @@ func showAllTasks(todos []Todo){
   }
 }
 
+func addNewTask(todos []Todo) {
+  var task string
+  fmt.Scanln("Add task: ", &task)
+  newTodo := Todo{
+    ID: len(todos),
+    Task: task,
+    Completed: false,
+  }
+  todos = append(todos, newTodo)
+  fmt.Println("Todo added successfully...")
+}
+
 func main() { 
   fmt.Println("Welcome to the TO-DO CLI App")
   var todos []Todo
@@ -30,6 +42,8 @@ func main() {
     switch option {
     case 1:
       showAllTasks(todos)
+    case 2:
+      addNewTask(todos)
     }
   }
 }
