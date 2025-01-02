@@ -7,15 +7,21 @@ import (
 	"strings"
 )
 
+type SearchConfig struct {
+  FilePath string
+  SearchTerm string
+}
+
 func main() {
+  config := SearchConfig{}
   if len(os.Args) !=3 {
     fmt.Println("Usage <filepath> <search_term>")
     os.Exit(1)
   }
-  filepath := os.Args[1]
-  searchTerm := os.Args[2]
+  config.FilePath = os.Args[1]
+  config.SearchTerm = os.Args[2]
 
-  file, err := os.Open(filepath)
+  file, err := os.Open(config.FilePath)
   if err != nil {
     fmt.Println("Error opening file.")
     os.Exit(1)
@@ -29,7 +35,7 @@ func main() {
   for scanner.Scan() {
     lineNum++
     line := scanner.Text()
-    if strings.Contains(line, searchTerm) {
+    if strings.Contains(line, config.SearchTerm) {
       fmt.Printf("Line is: %d: %s\n", lineNum, line)
     }
   }
