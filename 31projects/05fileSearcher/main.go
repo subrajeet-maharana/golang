@@ -6,9 +6,12 @@ import (
 )
 
 func main() {
-  var filepath string
-  fmt.Println("Enter the file path: ");
-  fmt.Scanln(&filepath)
+  if len(os.Args) !=3 {
+    fmt.Println("Usage <filepath> <search_term>")
+    os.Exit(1)
+  }
+  filepath := os.Args[1]
+
   file, err := os.Open(filepath)
   if err != nil {
     fmt.Println("Error opening file.")
