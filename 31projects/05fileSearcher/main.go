@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -11,6 +13,7 @@ func main() {
     os.Exit(1)
   }
   filepath := os.Args[1]
+  searchTerm := os.Args[2]
 
   file, err := os.Open(filepath)
   if err != nil {
@@ -19,4 +22,15 @@ func main() {
   }
 
   defer file.Close()
+
+  scanner := bufio.NewScanner(file)
+  lineNum := 0
+
+  for scanner.Scan() {
+    lineNum++
+    line := scanner.Text()
+    if strings.Contains(line, searchTerm) {
+      fmt.Printf("Line is: %d: %s\n", lineNum, line)
+    }
+  }
 }
