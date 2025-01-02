@@ -33,4 +33,8 @@ func main() {
       fmt.Printf("Line is: %d: %s\n", lineNum, line)
     }
   }
+
+  if err := scanner.Err(); err != nil {
+    fmt.Printf("Error reading file: %v\n", err)
+  }
 }
