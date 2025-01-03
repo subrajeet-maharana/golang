@@ -23,14 +23,18 @@ func searchFile(config SearchConfig) {
 
   scanner := bufio.NewScanner(file)
   lineNum := 0
+  matchCount := 0
 
   for scanner.Scan() {
     lineNum++
     line := scanner.Text()
     if strings.Contains(line, config.SearchTerm) {
       fmt.Printf("Line is: %d: %s\n", lineNum, line)
+      matchCount++
     }
   }
+  
+  fmt.Printf("\nFound %d matches\n", matchCount)
 
   if err := scanner.Err(); err != nil {
     fmt.Printf("Error reading file: %v\n", err)
