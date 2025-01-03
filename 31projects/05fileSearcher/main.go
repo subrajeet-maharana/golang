@@ -8,6 +8,7 @@ import (
 )
 
 type SearchConfig struct {
+  CaseSensitive bool
   FilePath string
   SearchTerm string
 }
@@ -15,10 +16,8 @@ type SearchConfig struct {
 func searchFile(config SearchConfig) error {
   file, err := os.Open(config.FilePath)
   if err != nil {
-    fmt.Println("Error opening file.")
-    os.Exit(1)
+    return fmt.Errorf("Failed to open the file: %v", err)
   }
-
   defer file.Close()
 
   scanner := bufio.NewScanner(file)
@@ -28,18 +27,28 @@ func searchFile(config SearchConfig) error {
   for scanner.Scan() {
     lineNum++
     line := scanner.Text()
-    if strings.Contains(line, config.SearchTerm) {
+
+    var searchLine, searchTerm string
+    
+    if config.CaseSensitive {
+      searchLine = line
+      searchTerm = config.SearchTerm
+    } else {
+      searchLine = strings.ToLower(line)
+      searchTerm = strings.ToLower(config.SearchTerm)
+    }
+
+    if strings.Contains(searchLine, searchTerm) {
       fmt.Printf("Line is: %d: %s\n", lineNum, line)
       matchCount++
     }
   }
-  
-  fmt.Printf("\nFound %d matches\n", matchCount)
 
   if err := scanner.Err(); err != nil {
     fmt.Printf("Error reading file: %v\n", err)
   }
 
+  fmt.Printf("\nFound %d matches\n", matchCount)
   return nil
 }
 
@@ -49,8 +58,14 @@ func main() {
     fmt.Println("Usage <filepath> <search_term>")
     os.Exit(1)
   }
+
   config.FilePath = os.Args[1]
   config.SearchTerm = os.Args[2]
+  config.CaseSensitive = true
+  if os.Args[3]=="false" {
+    config.CaseSensitive = false
+  }
+
   searchFile(config)
   if err := searchFile(config); err != nil {
     fmt.Fprintf(os.Stderr, "Error: %v\n", err)
