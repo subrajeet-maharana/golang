@@ -12,7 +12,7 @@ type SearchConfig struct {
   SearchTerm string
 }
 
-func searchFile(config SearchConfig) {
+func searchFile(config SearchConfig) error {
   file, err := os.Open(config.FilePath)
   if err != nil {
     fmt.Println("Error opening file.")
@@ -39,6 +39,8 @@ func searchFile(config SearchConfig) {
   if err := scanner.Err(); err != nil {
     fmt.Printf("Error reading file: %v\n", err)
   }
+
+  return nil
 }
 
 func main() {
@@ -50,4 +52,8 @@ func main() {
   config.FilePath = os.Args[1]
   config.SearchTerm = os.Args[2]
   searchFile(config)
+  if err := searchFile(config); err != nil {
+    fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+    os.Exit(1)
+  }
 }
