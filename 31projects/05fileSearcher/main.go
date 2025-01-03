@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -54,19 +55,19 @@ func searchFile(config SearchConfig) error {
 
 func main() {
   config := SearchConfig{}
-  if len(os.Args) !=3 {
-    fmt.Println("Usage <filepath> <search_term>")
+
+  flag.StringVar(&config.FilePath, "file", "", "Path to the file to search")
+  flag.BoolVar(&config.CaseSensitive, "case-sensitive", false, "Enable case sensitive search")
+  flag.Parse()
+
+  args := flag.Args()
+  if len(args) !=1 || config.FilePath == "" {
+    fmt.Println("Usage: program -file=<filepath> [-case-sensitive] <search_term>")
+    flag.PrintDefaults()
     os.Exit(1)
   }
+  config.SearchTerm = args[0]
 
-  config.FilePath = os.Args[1]
-  config.SearchTerm = os.Args[2]
-  config.CaseSensitive = true
-  if os.Args[3]=="false" {
-    config.CaseSensitive = false
-  }
-
-  searchFile(config)
   if err := searchFile(config); err != nil {
     fmt.Fprintf(os.Stderr, "Error: %v\n", err)
     os.Exit(1)
