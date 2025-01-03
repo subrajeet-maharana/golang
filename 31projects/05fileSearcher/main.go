@@ -29,12 +29,10 @@ func searchFile(config SearchConfig) error {
     lineNum++
     line := scanner.Text()
 
-    var searchLine, searchTerm string
+    searchLine := line
+    searchTerm := config.SearchTerm
     
-    if config.CaseSensitive {
-      searchLine = line
-      searchTerm = config.SearchTerm
-    } else {
+    if !config.CaseSensitive {
       searchLine = strings.ToLower(line)
       searchTerm = strings.ToLower(config.SearchTerm)
     }
