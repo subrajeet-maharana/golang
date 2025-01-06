@@ -14,6 +14,13 @@ type SearchConfig struct {
   SearchTerm string
 }
 
+type SearchResult struct {
+  LineNum int
+  Line string
+  Term string
+  Position int
+}
+
 func searchFile(config SearchConfig) error {
   file, err := os.Open(config.FilePath)
   if err != nil {
