@@ -12,7 +12,7 @@ import (
 type SearchConfig struct {
   CaseSensitive bool
   FilePath string
-  SearchTerm string
+  SearchTerms []string
 }
 
 type SearchResult struct {
@@ -38,7 +38,7 @@ func searchFile(config SearchConfig) error {
     line := scanner.Text()
 
     searchLine := line
-    searchTerm := config.SearchTerm
+    searchTerm := config.SearchTerm // add loop to search across
     
     if !config.CaseSensitive {
       searchLine = strings.ToLower(line)
@@ -66,13 +66,13 @@ func main() {
   flag.BoolVar(&config.CaseSensitive, "case-sensitive", false, "Enable case sensitive search")
   flag.Parse()
 
-  args := flag.Args()
-  if len(args) !=1 || config.FilePath == "" {
-    fmt.Println("Usage: program -file=<filepath> [-case-sensitive] <search_term>")
+  config.SearchTerms = flag.Args()
+  if len(config.SearchTerms) ==0 || config.FilePath == "" {
+    fmt.Println("Usage: program -file=<filepath> [-case-sensitive] <search_term1> [search_term2 ...]")
     flag.PrintDefaults()
     os.Exit(1)
   }
-  config.SearchTerm = args[0]
+
   log.Printf("Starting search in file: %s\n", config.FilePath)
   if err := searchFile(config); err != nil {
     fmt.Fprintf(os.Stderr, "Error: %v\n", err)
