@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
@@ -72,7 +73,7 @@ func main() {
     os.Exit(1)
   }
   config.SearchTerm = args[0]
-
+  log.Printf("Starting search in file: %s\n", config.FilePath)
   if err := searchFile(config); err != nil {
     fmt.Fprintf(os.Stderr, "Error: %v\n", err)
     os.Exit(1)
