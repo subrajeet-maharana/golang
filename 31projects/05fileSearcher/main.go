@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 )
 
 type SearchConfig struct {
@@ -40,7 +41,6 @@ func searchLine(line string, lineNum int, term string, caseSensitive bool) *Sear
       Position: pos, 
     }
   }
-  
   return nil
 }
 
@@ -52,20 +52,28 @@ func searchFile(config SearchConfig) ([]SearchResult, error ){
   defer file.Close()
 
   var results []SearchResult
+  resultsChan := make(chan SearchResult)
+  done := make(chan struct{})
+  var wg sync.WaitGroup
+
+  // Add go routine to collect results
 
   scanner := bufio.NewScanner(file)
   lineNum := 0
-  matchCount := 0
 
   for scanner.Scan() {
     lineNum++
     line := scanner.Text()
 
     for _, searchTerm := range config.SearchTerms {
-      if result := searchLine(line, lineNum, searchTerm, config.CaseSensitive); result != nil {
-        results = append(results, *result)
-        matchCount++
-      }
+      wg.Add(1)
+      go func(l string, ln int, t string) {
+        defer wg.Done()
+        if result := searchLine(l, ln, t, config.CaseSensitive); result != nil {
+          log.Printf("Found match for '%s' on line %d", t, ln)
+          resultsChan <- *result
+        }
+      }(line, lineNum, searchTerm)
     }
   }
 
@@ -73,7 +81,10 @@ func searchFile(config SearchConfig) ([]SearchResult, error ){
     fmt.Printf("Error reading file: %v\n", err)
   }
 
-  fmt.Printf("\nFound %d matches\n", matchCount)
+  wg.Wait()
+  close(resultsChan)
+  <-done
+
   return results, nil
 }
 
