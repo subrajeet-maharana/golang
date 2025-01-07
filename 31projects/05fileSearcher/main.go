@@ -22,6 +22,28 @@ type SearchResult struct {
   Position int
 }
 
+func searchLine(line string, lineNum int, term string, caseSensitive bool) *SearchResult {
+  searchLine := line
+  searchTerm := term
+
+  if !caseSensitive {
+    searchLine = strings.ToLower(line)
+    searchTerm = strings.ToLower(term)
+  }
+
+  pos := strings.Index(searchLine, searchTerm)
+  if pos >= 0 {
+    return &SearchResult{
+      LineNum: lineNum,
+      Line: line,
+      Term: term, 
+      Position: pos, 
+    }
+  }
+  
+  return nil
+}
+
 func searchFile(config SearchConfig) ([]SearchResult, error ){
   file, err := os.Open(config.FilePath)
   if err != nil {
