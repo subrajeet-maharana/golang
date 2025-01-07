@@ -22,12 +22,14 @@ type SearchResult struct {
   Position int
 }
 
-func searchFile(config SearchConfig) error {
+func searchFile(config SearchConfig) ([]SearchResult, error ){
   file, err := os.Open(config.FilePath)
   if err != nil {
-    return fmt.Errorf("Failed to open the file: %v", err)
+    return nil, fmt.Errorf("Failed to open the file: %v", err)
   }
   defer file.Close()
+
+  var results []SearchResult
 
   scanner := bufio.NewScanner(file)
   lineNum := 0
@@ -37,17 +39,19 @@ func searchFile(config SearchConfig) error {
     lineNum++
     line := scanner.Text()
 
-    searchLine := line
-    searchTerm := config.SearchTerm // add loop to search across
-    
-    if !config.CaseSensitive {
-      searchLine = strings.ToLower(line)
-      searchTerm = strings.ToLower(config.SearchTerm)
-    }
+    for _, searchTerm := range config.SearchTerms {
+      searchLine := line
 
-    if strings.Contains(searchLine, searchTerm) {
-      fmt.Printf("Line is: %d: %s\n", lineNum, line)
-      matchCount++
+      if !config.CaseSensitive {
+        searchLine = strings.ToLower(line)
+        searchTerm = strings.ToLower(searchTerm)
+      }
+
+      if strings.Contains(searchLine, searchTerm) {
+        fmt.Printf("Line is: %d: %s\n", lineNum, line)
+        results = append(results, SearchResult{lineNum, line, searchTerm, 0})
+        matchCount++
+      }
     }
   }
 
@@ -56,7 +60,7 @@ func searchFile(config SearchConfig) error {
   }
 
   fmt.Printf("\nFound %d matches\n", matchCount)
-  return nil
+  return results, nil
 }
 
 func main() {
