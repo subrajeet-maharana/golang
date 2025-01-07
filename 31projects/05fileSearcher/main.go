@@ -62,16 +62,8 @@ func searchFile(config SearchConfig) ([]SearchResult, error ){
     line := scanner.Text()
 
     for _, searchTerm := range config.SearchTerms {
-      searchLine := line
-
-      if !config.CaseSensitive {
-        searchLine = strings.ToLower(line)
-        searchTerm = strings.ToLower(searchTerm)
-      }
-
-      if strings.Contains(searchLine, searchTerm) {
-        fmt.Printf("Line is: %d: %s\n", lineNum, line)
-        results = append(results, SearchResult{lineNum, line, searchTerm, 0})
+      if result := searchLine(line, lineNum, searchTerm, config.CaseSensitive); result != nil {
+        results = append(results, *result)
         matchCount++
       }
     }
