@@ -118,6 +118,7 @@ func main() {
     return
   }
 
+  fmt.Printf("\nFound %d matches:\n", len(results))
   for _, result := range results {
     fmt.Printf("Line %d, pos %d (%s): %s\n",
       result.LineNum,
