@@ -108,8 +108,17 @@ func main() {
   }
 
   log.Printf("Starting search in file: %s\n", config.FilePath)
-  if err := searchFile(config); err != nil {
-    fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-    os.Exit(1)
+  results, err := searchFile(config)
+  if err != nil {
+    log.Fatalf("Error: %v", err)
+  }
+  
+  for _, result := range results {
+    fmt.Printf("Line %d, pos %d (%s): %s\n",
+      result.LineNum,
+      result.Position,
+      result.Term,
+      result.Line,
+    )
   }
 }
