@@ -56,7 +56,12 @@ func searchFile(config SearchConfig) ([]SearchResult, error ){
   done := make(chan struct{})
   var wg sync.WaitGroup
 
-  // Add go routine to collect results
+  go func() {
+    for result := range resultsChan {
+      results = append(results, result)
+    }
+    done <- struct{}{}
+  }()
 
   scanner := bufio.NewScanner(file)
   lineNum := 0
