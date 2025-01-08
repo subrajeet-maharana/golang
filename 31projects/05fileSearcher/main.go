@@ -113,6 +113,11 @@ func main() {
     log.Fatalf("Error: %v", err)
   }
   
+  if len(results) == 0 {
+    fmt.Println("No matches found")
+    return
+  }
+
   for _, result := range results {
     fmt.Printf("Line %d, pos %d (%s): %s\n",
       result.LineNum,
