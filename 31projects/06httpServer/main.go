@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -45,6 +46,18 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
   default:
     http.Error(w, "Method not allowed!", http.StatusMethodNotAllowed)
   }
+}
+
+func handleGetPosts(w http.ResponseWriter, r *http.Request) {
+  postsMu.Lock()
+  defer postsMu.Unlock()
+
+  newPosts := make([]Post, 0, len(posts))
+  for _, post := range posts {
+    newPosts = append(newPosts, post)
+  }
+  w.Header().Set("Content-Type", "application/json")
+  json.NewEncoder(w).Encode(newPosts)
 }
 
 func main() {
