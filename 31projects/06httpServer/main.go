@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+  "io"
 	"sync"
 )
 
@@ -62,7 +63,18 @@ func handleGetPosts(w http.ResponseWriter, r *http.Request) {
 
 func handlePostPosts(w http.ResponseWriter, r *http.Request) {
   var newPost Post
-  // Add logic to parse body and write to newPost
+
+  body, err := io.ReadAll(r.Body)
+  if err != nil {
+    http.Error(w, "Error reading request body...", http.StatusInternalServerError)
+    return 
+  }
+
+  if err := json.Unmarshal(body, &newPost); err != nil {
+    http.Error(w, "Error parsing request body...", http.StatusBadRequest)
+    return
+  }
+
   postsMu.Lock()
   defer postsMu.Unlock()
 
