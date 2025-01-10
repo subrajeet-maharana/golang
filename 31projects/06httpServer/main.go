@@ -60,6 +60,21 @@ func handleGetPosts(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(newPosts)
 }
 
+func handlePostPosts(w http.ResponseWriter, r *http.Request) {
+  var newPost Post
+  // Add logic to parse body and write to newPost
+  postsMu.Lock()
+  defer postsMu.Unlock()
+
+  newPost.ID=nextId
+  nextId++
+  posts[newPost.ID] = newPost
+
+  w.Header().Set("Content-Type", "application/json")
+  w.WriteHeader(http.StatusCreated)
+  json.NewEncoder(w).Encode(newPost)
+}
+
 func handleGetPost(w http.ResponseWriter, r *http.Request, id int) {
   postsMu.Lock()
   defer postsMu.Unlock()
