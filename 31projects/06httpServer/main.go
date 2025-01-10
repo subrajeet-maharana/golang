@@ -18,6 +18,17 @@ var (
   postsMu sync.Mutex
 )
 
+func postsHandler(w http.ResponseWriter, r *http.Request) {
+  switch r.Method {
+  case "GET":
+    handleGetPosts(w, r)
+  case "POST":
+    handlePostPosts(w, r)
+  default:
+    http.Error(w, "Method not allowed!", http.StatusMethodNotAllowed)
+  }
+}
+
 func main() {
   http.HandleFunc("/posts", postsHandler)
   http.HandleFunc("/post", postHandler)
