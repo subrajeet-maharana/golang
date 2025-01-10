@@ -74,6 +74,20 @@ func handleGetPost(w http.ResponseWriter, r *http.Request, id int) {
   json.NewEncoder(w).Encode(post)
 }
 
+func handleDeletePost(w http.ResponseWriter, r *http.Request, id int) {
+  postsMu.Lock()
+  defer postsMu.Unlock()
+
+  _, ok := posts[id]
+  if !ok {
+    http.Error(w, "Post with this ID is not found!", http.StatusNotFound)
+    return
+  }
+
+  delete(posts, id)
+  w.WriteHeader(http.StatusOK)
+}
+
 func main() {
   http.HandleFunc("/posts", postsHandler)
   http.HandleFunc("/post", postHandler)
