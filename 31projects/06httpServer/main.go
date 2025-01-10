@@ -60,6 +60,20 @@ func handleGetPosts(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(newPosts)
 }
 
+func handleGetPost(w http.ResponseWriter, r *http.Request, id int) {
+  postsMu.Lock()
+  defer postsMu.Unlock()
+
+  post, ok := posts[id]
+  if !ok {
+    http.Error(w, "Post with this ID is not found!", http.StatusNotFound)
+    return
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  json.NewEncoder(w).Encode(post)
+}
+
 func main() {
   http.HandleFunc("/posts", postsHandler)
   http.HandleFunc("/post", postHandler)
