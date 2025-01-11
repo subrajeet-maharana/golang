@@ -1,9 +1,12 @@
+// concurrency and parallelism are different things in golang
+// concurrency is context switching in rapid pace so that it seems like parallel execution while parallelism is completely cpu bound multi-core implementation
 package main
 
 import (
 	"fmt"
 	"net/http"
 	"sync"
+	"time"
 )
 
 var wg sync.WaitGroup //pointer
@@ -19,6 +22,13 @@ func main() {
 		"https://www.twitter.com",
 		"https://www.instagram.com",
 	}
+
+  go func() {
+    fmt.Println("Anonymous go routine running...")
+    time.Sleep(5*time.Second)
+    fmt.Println("Anonymous go routine ending...")
+  }()
+
 	for _, website := range websiteList {
 		go getStatusCode(website)
 		wg.Add(1)
