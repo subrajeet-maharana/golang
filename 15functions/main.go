@@ -10,7 +10,11 @@ func main() {
 	proResult, myMessage := proAdder(5, 68, 78, 98, 387, 89)
 	fmt.Println("The pro result is", proResult)
 	fmt.Println("The pro message is", myMessage)
-
+  add := func (a, b int) int {
+    return a+b
+  }
+  anResult := add(546,-98)
+  fmt.Println("The result from anonymous function is: ", anResult)
 }
 func greetTwo() {
 	fmt.Println("Welcome Again!")
