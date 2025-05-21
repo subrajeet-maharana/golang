@@ -1,3 +1,3 @@
-module hello
+module github.com/subrajeet-maharana/golang/01hello
 
-go 1.19
+go 1.22.0

@@ -1,3 +1,3 @@
-module ifelse
+module github.com/subrajeet-maharana/golang/12ifelse
 
-go 1.19
+go 1.22.0

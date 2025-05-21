@@ -1,3 +1,3 @@
-module mymaps
+module github.com/subrajeet-maharana/golang/10mymaps
 
-go 1.19
+go 1.22.0

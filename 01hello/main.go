@@ -5,7 +5,7 @@
 // System apps to web apps - Cloud
 // Already in Production
 // Object-oriented? Kinda'
-// Before writing any code,write "go mod init hello" in terminal at dir where .go is located
+// Before writing any code,write "go mod init github.com/subrajeet-maharana/fileName" in terminal at dir where .go is located
 // To run: go run fileName.go
 // For Help: go help
 // Lexer: Grammar Checker at precompilation
@@ -20,8 +20,8 @@ import (
 )
 
 func main() {
-  reader:= bufio.NewReader(os.Stdin)
-  fmt.Println("Enter your name: ")
-  name, _ := reader.ReadString('\n')
-  fmt.Println("Hello! Your name is: ", name)
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("Enter your name: ")
+	name, _ := reader.ReadString('\n')
+	fmt.Println("Hello! Your name is: ", name)
 }

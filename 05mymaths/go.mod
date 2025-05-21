@@ -1,3 +1,3 @@
-module mymaths
+module github.com/subrajeet-maharana/golang/05mymaths
 
-go 1.19
+go 1.22.0

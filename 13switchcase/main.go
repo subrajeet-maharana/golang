@@ -21,7 +21,7 @@ func main() {
 		fmt.Println("You can move 3 spots.")
 	case 4:
 		fmt.Println("You can move 4 spots.")
-		fallthrough
+		fallthrough //If case 4 occurs, then case 5 will also fall through
 	case 5:
 		fmt.Println("You can move 5 spots.")
 	case 6:

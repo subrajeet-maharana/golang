@@ -9,7 +9,7 @@ import (
 
 func main() {
 	fmt.Println("Welcome to files in Golang")
-	content := "This needs to go in to file."
+	content := "14 Days Remaining..."
 	file, err := os.Create("./myGoFile.txt")
 	// if err != nil {
 	// 	panic(err)

@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	fmt.Println("Welcome to Structs in Golang!")
-	subrajeet := User{"Subrajeet", "subrajeet@go.dev", true, 22}
+	subrajeet := User{"Subrajeet", "subrajeet@go.dev", true, 25}
 	fmt.Println(subrajeet)
 	fmt.Printf("The details of Subrajeet are %+v\n", subrajeet)
 	fmt.Printf("The name is %v and email is %v\n", subrajeet.Name, subrajeet.Email)

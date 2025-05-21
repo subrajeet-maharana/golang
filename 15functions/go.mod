@@ -1,3 +1,3 @@
-module functions
+module github.com/subrajeet-maharana/golang/15functions
 
-go 1.19
+go 1.22.0

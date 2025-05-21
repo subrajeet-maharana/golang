@@ -27,12 +27,12 @@ func main() {
 		fmt.Println("Bad Score")
 	}
 
-  // Goto Statement
-  i := 0
-  reprintGoto: 
-    if i <= 10 {
-      fmt.Printf("%d ", i)
-      i++
-      goto reprintGoto
-    }
+	// Goto Statement
+	i := 0
+reprintGoto:
+	if i <= 10 {
+		fmt.Printf("%d ", i)
+		i++
+		goto reprintGoto
+	}
 }

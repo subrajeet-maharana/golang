@@ -1,3 +1,3 @@
-module userinput
+module github.com/subrajeet-maharana/golang/03userinput
 
-go 1.19
+go 1.22.0

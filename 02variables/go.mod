@@ -1,3 +1,3 @@
-module variables
+module github.com/subrajeet-maharana/golang/02variables
 
-go 1.19
+go 1.22.0

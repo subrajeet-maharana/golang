@@ -7,24 +7,24 @@ func main() {
 	defer fmt.Println("Two")
 	defer fmt.Println("Three")
 	fmt.Println("Four")
-	// myDefer()
-  panicAndRecover()
+	myDefer()
+	panicAndRecover()
 }
 func myDefer() {
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		defer fmt.Printf("%v ", i)
 	}
 }
 
 func panicAndRecover() {
-  fmt.Println("Panic and Recover Demonstration: ")
-  defer func() {
-    if r := recover(); r != nil {
-      fmt.Println("Recovered from panic!", r)
-    }
-  }()
+	fmt.Println("Panic and Recover Demonstration: ")
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic!", r)
+		}
+	}()
 
-  fmt.Println("Before Panic: ")
-  panic("Something went wrong...")
-  fmt.Println("After Panic: ")
+	fmt.Println("Before Panic: ")
+	// panic("Something went wrong...")
+	fmt.Println("After Panic: ")
 }

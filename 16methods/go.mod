@@ -1,3 +1,3 @@
-module methods
+module github.com/subrajeet-maharana/golang/16methods
 
-go 1.19
+go 1.22.0
